@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Anastasia YouTube</string>
+    <string name="allagi">ΑΛΛΑΓΗ</string>
+    <string name="rythmiseis">Ρυθμίσεις</string>
+    <string name="eisagogi">Ένα κουμπί που επιπλέει πάνω από το YouTube. Ένα πάτημα αλλάζει τραγούδι ή μουσική.</string>
+    <string name="vima1">1. Εμφάνιση πάνω από άλλες εφαρμογές</string>
+    <string name="vima2">2. Πρόσβαση σε ειδοποιήσεις</string>
+    <string name="vima3">3. Ξεκίνημα</string>
+    <string name="dose_overlay">Άνοιγμα ρύθμισης</string>
+    <string name="dose_eidopoiiseis">Άνοιγμα ρύθμισης</string>
+    <string name="ksekina">Ξεκίνα τη μουσική</string>
+    <string name="stamata">Σταμάτα το κουμπί</string>
+    <string name="entaksei">Δόθηκε</string>
+    <string name="leipei">Λείπει — πάτα παρακάτω</string>
+    <string name="trexei">Το κουμπί είναι ενεργό</string>
+    <string name="lathos_overlay">Δεν δόθηκε άδεια εμφάνισης πάνω από άλλες εφαρμογές.</string>
+    <string name="p_orio">Όριο δευτερολέπτων</string>
+    <string name="p_anoxi">Ανοχή πατημάτων</string>
+    <string name="p_skip">Προσπεράσεις πριν «σπανιότερα»</string>
+    <string name="p_varos">Πόσο σπανιότερα (0.05 - 1)</string>
+    <string name="epeksigisi_end">Πάτημα μετά από τόσα δευτερόλεπτα αλλάζει τραγούδι. Πάτημα νωρίτερα αλλάζει ολόκληρη τη μουσική, εκτός αν απομένουν πατήματα ανοχής.</string>
+    <string name="plirofories">Λίστες: %1$d. Όσες δεν άνοιξαν: %2$d.</string>
+    <string name="apothikefsi">Αποθήκευση</string>
+    <string name="midenismos">Μηδενισμός μάθησης</string>
+    <string name="apothikeftike">Αποθηκεύτηκε</string>
+    <string name="egine">Έγινε</string>
+    <string name="ypografi">Απόστολος Μακρυγένης\nΑφιερωμένο στην Αναστασία</string>
+</resources>
