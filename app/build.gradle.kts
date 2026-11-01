@@ -15,9 +15,23 @@ android {
         versionName = "1.0"
     }
 
+    // Statheri ypografi, oste kathe nea ekdosi na mpainei pano stin proigoumeni
+    signingConfigs {
+        getByName("debug") {
+            storeFile = rootProject.file("anastasia.keystore")
+            storePassword = "anastasia"
+            keyAlias = "anastasia"
+            keyPassword = "anastasia"
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+        }
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
