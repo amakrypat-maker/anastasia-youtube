@@ -6,7 +6,10 @@
     <string name="eisagogi">Ένα κουμπί που επιπλέει πάνω από το YouTube. Ένα πάτημα αλλάζει τραγούδι ή μουσική.</string>
     <string name="vima1">1. Εμφάνιση πάνω από άλλες εφαρμογές</string>
     <string name="vima2">2. Πρόσβαση σε ειδοποιήσεις</string>
-    <string name="vima3">3. Ξεκίνημα</string>
+    <string name="vima3">3. Πλήρης οθόνη (προαιρετικό)</string>
+    <string name="vima4">4. Ξεκίνημα</string>
+    <string name="dose_prosvasimotita">Άνοιγμα ρύθμισης</string>
+    <string name="prosvasimotita_perigrafi">Βάζει το βίντεο σε πλήρη οθόνη μόλις αλλάξει μουσική. Δεν κάνει τίποτα άλλο.</string>
     <string name="dose_overlay">Άνοιγμα ρύθμισης</string>
     <string name="dose_eidopoiiseis">Άνοιγμα ρύθμισης</string>
     <string name="ksekina">Ξεκίνα τη μουσική</string>

@@ -76,6 +76,12 @@ object Logiki {
                     Epilogeas.simeioseApotyxia(id)
                 }
             }
+            if (epityxia) {
+                // Afinoume to YouTube na iremisei kai meta zitame pliri othoni
+                kyrioNima.postDelayed({
+                    Prosvasimotita.energi?.megistopoiise()
+                }, 2500)
+            }
             val telikoMinima = if (epityxia) onoma else "Δεν βρέθηκε λίστα"
             kyrioNima.post {
                 apasxolimenos = false

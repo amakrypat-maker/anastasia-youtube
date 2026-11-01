@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var riza: LinearLayout
     private lateinit var katastasiOverlay: TextView
     private lateinit var katastasiEidopoiiseis: TextView
+    private lateinit var katastasiProsvasimotita: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +98,13 @@ class MainActivity : AppCompatActivity() {
         riza.addView(koumpi(getString(R.string.dose_eidopoiiseis)) { anoikseEidopoiiseis() })
 
         riza.addView(titlos(getString(R.string.vima3)))
+        katastasiProsvasimotita = keimenaki("")
+        riza.addView(katastasiProsvasimotita)
+        riza.addView(koumpi(getString(R.string.dose_prosvasimotita)) {
+            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+        })
+
+        riza.addView(titlos(getString(R.string.vima4)))
         riza.addView(koumpi(getString(R.string.ksekina), true) { ksekina() })
         riza.addView(koumpi(getString(R.string.stamata)) { stamata() })
         riza.addView(koumpi(getString(R.string.rythmiseis)) {
@@ -128,11 +136,18 @@ class MainActivity : AppCompatActivity() {
         val oxi = getString(R.string.leipei)
         katastasiOverlay.text = if (Settings.canDrawOverlays(this)) ok else oxi
         katastasiEidopoiiseis.text = if (exoumeEidopoiiseis()) ok else oxi
+        katastasiProsvasimotita.text = if (exoumeProsvasimotita()) ok else oxi
     }
 
     private fun exoumeEidopoiiseis(): Boolean {
         val energes = Settings.Secure.getString(
             contentResolver, "enabled_notification_listeners") ?: return false
+        return energes.contains(packageName)
+    }
+
+    private fun exoumeProsvasimotita(): Boolean {
+        val energes = Settings.Secure.getString(
+            contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES) ?: return false
         return energes.contains(packageName)
     }
 
