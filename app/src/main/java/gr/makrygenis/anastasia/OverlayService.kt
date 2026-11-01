@@ -63,13 +63,13 @@ class OverlayService : Service() {
         val t = TextView(this).apply {
             text = getString(R.string.allagi)
             setTextColor(0xFFFFFFFF.toInt())
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f)
             gravity = Gravity.CENTER
-            setPadding(dp(26), dp(18), dp(26), dp(18))
+            setPadding(dp(42), dp(28), dp(42), dp(28))
             background = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
-                cornerRadius = dp(26).toFloat()
-                colors = intArrayOf(0xFFB472F7.toInt(), 0xFF6B21A8.toInt())
+                cornerRadius = dp(32).toFloat()
+                colors = intArrayOf(0xFFFF4B3E.toInt(), 0xFFB71C1C.toInt())
                 orientation = GradientDrawable.Orientation.TOP_BOTTOM
                 setStroke(dp(2), 0x55FFFFFF)
             }
