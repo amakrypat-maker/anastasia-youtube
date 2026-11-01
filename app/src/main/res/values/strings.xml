@@ -26,4 +26,7 @@
     <string name="apothikeftike">Αποθηκεύτηκε</string>
     <string name="egine">Έγινε</string>
     <string name="ypografi">Απόστολος Μακρυγένης\nΑφιερωμένο στην Αναστασία</string>
+    <string name="stamata_konta">Σταμάτα</string>
+    <string name="epivevaiosi_kleisimatos">Κράτα το ξανά πατημένο για να κλείσει</string>
+    <string name="kleinei">Το κουμπί έκλεισε</string>
 </resources>

@@ -23,8 +23,14 @@ import kotlin.math.abs
 /** To koumpi pou epiplei pano apo tin efarmogi YouTube. */
 class OverlayService : Service() {
 
+    companion object {
+        const val ENERGEIA_STOP = "gr.makrygenis.anastasia.STOP"
+    }
+
+
     private lateinit var wm: WindowManager
     private var koumpi: TextView? = null
+    private var zitimaKleisimou = 0L
     private lateinit var parametroi: WindowManager.LayoutParams
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -39,6 +45,10 @@ class OverlayService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent?.action == ENERGEIA_STOP) {
+            stopSelf()
+            return START_NOT_STICKY
+        }
         if (intent?.getBooleanExtra("ksekina", false) == true) {
             Logiki.alliMousiki(this) { deikse(it) }
         }
@@ -89,6 +99,7 @@ class OverlayService : Service() {
         var afiArxi = 0f
         var afiArxiY = 0f
         var metakinithike = false
+        var xronosKato = 0L
 
         t.setOnTouchListener { _, e ->
             when (e.action) {
@@ -96,6 +107,7 @@ class OverlayService : Service() {
                     xArxi = parametroi.x; yArxi = parametroi.y
                     afiArxi = e.rawX; afiArxiY = e.rawY
                     metakinithike = false
+                    xronosKato = System.currentTimeMillis()
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
@@ -110,7 +122,10 @@ class OverlayService : Service() {
                     true
                 }
                 MotionEvent.ACTION_UP -> {
-                    if (!metakinithike) patithike()
+                    if (!metakinithike) {
+                        val diarkeia = System.currentTimeMillis() - xronosKato
+                        if (diarkeia > 1200) zitiseKleisimo() else patithike()
+                    }
                     true
                 }
                 else -> false
@@ -131,6 +146,18 @@ class OverlayService : Service() {
         Logiki.patima(this) { deikse(it) }
     }
 
+    /** Parateameno patima dyo fores = kleisimo. Mia fora den arkei. */
+    private fun zitiseKleisimo() {
+        val tora = System.currentTimeMillis()
+        if (tora - zitimaKleisimou < 6000) {
+            Toast.makeText(this, R.string.kleinei, Toast.LENGTH_SHORT).show()
+            stopSelf()
+        } else {
+            zitimaKleisimou = tora
+            Toast.makeText(this, R.string.epivevaiosi_kleisimatos, Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun deikse(minima: String) {
         Toast.makeText(this, minima, Toast.LENGTH_SHORT).show()
     }
@@ -148,12 +175,22 @@ class OverlayService : Service() {
             this, 0, Intent(this, MainActivity::class.java),
             PendingIntent.FLAG_IMMUTABLE
         )
+        val stopIntent = PendingIntent.getService(
+            this, 1,
+            Intent(this, OverlayService::class.java).setAction(ENERGEIA_STOP),
+            PendingIntent.FLAG_IMMUTABLE
+        )
         val e = Notification.Builder(this, kanali)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.trexei))
             .setSmallIcon(android.R.drawable.ic_media_play)
             .setContentIntent(anoigma)
             .setOngoing(true)
+            .addAction(
+                Notification.Action.Builder(
+                    null, getString(R.string.stamata_konta), stopIntent
+                ).build()
+            )
             .build()
         startForeground(1, e)
     }

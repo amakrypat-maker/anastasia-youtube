@@ -66,6 +66,9 @@ object Youtube {
             setPackage(PAKETO)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            // Zitaei apo to YouTube na anoiksei se pliri othoni
+            putExtra("force_fullscreen", true)
+            putExtra("finish_on_ended", false)
         }
         return try {
             c.startActivity(i)
