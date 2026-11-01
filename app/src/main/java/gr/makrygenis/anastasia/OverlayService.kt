@@ -25,11 +25,14 @@ class OverlayService : Service() {
 
     companion object {
         const val ENERGEIA_STOP = "gr.makrygenis.anastasia.STOP"
+        @Volatile
+        var energi: OverlayService? = null
     }
 
 
     private lateinit var wm: WindowManager
     private var koumpi: TextView? = null
+    private var frakti: View? = null
     private var zitimaKleisimou = 0L
     private lateinit var parametroi: WindowManager.LayoutParams
 
@@ -40,8 +43,10 @@ class OverlayService : Service() {
         Apothiki.fortose(this)
         ftiaxeEidopoiisi()
         wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        anevaseFrakti()
         ftiaxeKoumpi()
         Logiki.arxikopoiise()
+        energi = this
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -58,6 +63,47 @@ class OverlayService : Service() {
     private fun dp(v: Int): Int = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP, v.toFloat(), resources.displayMetrics
     ).toInt()
+
+    private fun typosParathyrou(): Int =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        else
+            @Suppress("DEPRECATION") WindowManager.LayoutParams.TYPE_PHONE
+
+    /**
+     * Aorato stroma pou katapinei kathe aggigma, oste to mono energo
+     * simeio tis othonis na einai to koumpi.
+     */
+    fun anevaseFrakti() {
+        if (frakti != null) return
+        val v = View(this)
+        v.setBackgroundColor(0x00000000)
+        v.setOnTouchListener { _, _ -> true }
+        val p = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            typosParathyrou(),
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT
+        ).apply { gravity = Gravity.TOP or Gravity.START }
+        try {
+            wm.addView(v, p)
+            frakti = v
+            // To koumpi prepei na meinei PANO apo to stroma
+            koumpi?.let { k ->
+                try { wm.removeView(k) } catch (_: Exception) {}
+                try { wm.addView(k, parametroi) } catch (_: Exception) {}
+            }
+        } catch (_: Exception) {}
+    }
+
+    fun katevaseFrakti() {
+        val v = frakti ?: return
+        frakti = null
+        try { wm.removeView(v) } catch (_: Exception) {}
+    }
 
     private fun ftiaxeKoumpi() {
         val t = TextView(this).apply {
@@ -76,15 +122,10 @@ class OverlayService : Service() {
             elevation = dp(8).toFloat()
         }
 
-        val typos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        else
-            @Suppress("DEPRECATION") WindowManager.LayoutParams.TYPE_PHONE
-
         parametroi = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
-            typos,
+            typosParathyrou(),
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT
@@ -196,6 +237,8 @@ class OverlayService : Service() {
     }
 
     override fun onDestroy() {
+        energi = null
+        katevaseFrakti()
         try { koumpi?.let { wm.removeView(it) } } catch (_: Exception) {}
         koumpi = null
         super.onDestroy()

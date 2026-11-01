@@ -56,6 +56,8 @@ object Logiki {
         if (apasxolimenos) return
         apasxolimenos = true
         minima("Αλλάζω μουσική…")
+        // Katevazoume to stroma gia na perasei i kinisi megistopoiisis
+        OverlayService.energi?.katevaseFrakti()
         Thread {
             var epityxia = false
             var onoma = ""
@@ -82,6 +84,9 @@ object Logiki {
                     Prosvasimotita.energi?.megistopoiise()
                 }, 2500)
             }
+            kyrioNima.postDelayed({
+                OverlayService.energi?.anevaseFrakti()
+            }, 4500)
             val telikoMinima = if (epityxia) onoma else "Δεν βρέθηκε λίστα"
             kyrioNima.post {
                 apasxolimenos = false
